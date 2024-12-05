@@ -19,15 +19,16 @@ def parse_input(input_path: str) -> tuple[list[str], list[str]]:
 
 
 # Return total distance between the lists
-def solution(l1: list[str], l2: list[str]) -> int:
+def solution(l1: list[str], l2: list[str]) -> tuple[int, int]:
     l1.sort()
     l2.sort()
 
-    dist = 0
+    dist = simlarity = 0
     for i, j in zip(l1, l2):
         dist += abs(i - j)
+        simlarity += i * l2.count(i)
 
-    return dist
+    return dist, simlarity
 
 
 # Test
