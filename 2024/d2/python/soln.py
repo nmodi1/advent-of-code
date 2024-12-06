@@ -27,15 +27,33 @@ def check_safe(report: list[int]) -> bool:
         return all(1 <= prev - curr <= 3 for prev, curr in zip(report, report[1:]))
 
 
-def solution(report_list: list[list[int]]) -> int:
+def solution(report_list: list[list[int]], p2_enabled: bool = True) -> int:
     num_safe = 0
     for report in report_list:
-        num_safe += 1 if check_safe(report) else 0
+        if check_safe(report):
+            num_safe += 1
+
+        elif p2_enabled:
+            # Brute force it
+            for i in range(len(report)):
+                copy = report.copy()
+                copy.pop(i)
+                if check_safe(copy):
+                    num_safe += 1
+                    break
 
     return num_safe
 
 
+# Test
+report_list = parse_input(TEST_INPUT_PATH)
+print(
+    f"Test - Part1 = {solution(report_list, False)} | Part2 = {solution(report_list, True)}"
+)
+print()
+
+# Actual
 report_list = parse_input(INPUT_PATH)
-# print(report_list)
-ans = solution(report_list)
-print(ans)
+print(
+    f"Actual - Part1 = {solution(report_list, False)} | Part2 = {solution(report_list, True)}"
+)
